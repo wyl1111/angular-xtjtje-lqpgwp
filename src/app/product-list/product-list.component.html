@@ -1,0 +1,32 @@
+<h2>Products</h2>
+
+<div *ngFor="let product of products">
+  <h3>
+    <!-- 携带product.id为参数进行跳转 -->
+    <!-- RouterLink指令自定义a元素。其中路由或URL中包含一个固定的区段/products,最后一段则是变量,用于插入当前产品的id -->
+    <a
+      [title]="product.name + ' details'"
+      [routerLink]="['/products', product.id]"
+    >
+      {{ product.name }}
+    </a>
+  </h3>
+
+  <p *ngIf="product.description">Description: {{ product.description }}</p>
+
+  <button type="button" (click)="share()">Share</button>
+  <!-- 数据传递给子组件 -->
+  <!-- [product]中的product是子组件ts文件中定义的product,"product"内的product是遍历products的值,有了[product]=product之后子组件中的值就是从该组件传入的，也就是将数据传递给了子组件 -->
+  <!-- <app-product-alerts [product]="product"></app-product-alerts> -->
+  <!-- 数据传递给父组件 -->
+  <!-- 通过子组件引发一个事件，并让父组件响应此事件 -->
+  <app-product-alerts
+    [product]="product"
+    (notify)="onNotify()"
+  ></app-product-alerts>
+</div>
+<!-- 
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://angular.io/license
+-->
